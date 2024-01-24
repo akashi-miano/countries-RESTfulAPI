@@ -2,9 +2,13 @@ import Navbar from "./components/Navbar";
 import Filter from "./components/Filter";
 import Countries from "./components/Countries";
 import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 function App() {
   const [response, setResponse] = useState([]);
   const [searchField, setSearchField] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,6 +19,7 @@ function App() {
         console.error("Error fetching data:", error);
       }
     };
+    AOS.init();
 
     fetchData();
   }, []);
@@ -22,23 +27,38 @@ function App() {
   const handleSearch = (e) => {
     setSearchField(e.target.value);
   };
-  const filterItems = () => {
-    return response.filter((item) => {
-      {
-        console.log(item.name.common.toLocaleLowerCase(), searchField);
-      }
-      return searchField.trim().toLowerCase() === ""
-        ? item
-        : item.name.common
-            .toLocaleLowerCase()
-            .includes(searchField.toLowerCase());
+
+  const handleSelectionChange = (e) => {
+    setSelectedRegion(e.target.value);
+  };
+
+  const filterBySearch = (countries) => {
+    return countries.filter((country) => {
+      const itemName = country.name.common.toLowerCase();
+      const searchValue = searchField.trim().toLowerCase();
+      return searchValue === "" || itemName.includes(searchValue);
     });
   };
+  const filterByRegion = (countries) => {
+    return selectedRegion === ""
+      ? countries
+      : countries.filter((country) => {
+          console.log(selectedRegion, country.region);
+          return country.region.toLowerCase() === selectedRegion.toLowerCase();
+        });
+  };
+
+  const filteredBySearch = filterBySearch(response);
+  const filteredByRegion = filterByRegion(response);
+
+  const filteredCountries = filterBySearch(filterByRegion(response));
   return (
     <>
-      <Navbar />
-      <Filter handleChange={handleSearch} />
-      <Countries response={filterItems()} />
+      <Filter
+        handleChange={handleSearch}
+        handleSelect={handleSelectionChange}
+      />
+      <Countries response={filteredCountries} />
     </>
   );
 }

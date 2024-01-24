@@ -23,7 +23,11 @@ const Navbar = () => {
     else setTheme("light");
   };
   return (
-    <nav className="py-6 shadow-lg dark:bg-darkBlue dark:text-white duration-300">
+    <nav
+      className="py-6 shadow-lg dark:bg-darkBlue dark:text-white duration-300"
+      data-aos="fade-down"
+      data-aos-delay="400"
+    >
       <div className="container flex items-center justify-between">
         <a href="" className="logo font-bold text-2xl">
           Where in the world?

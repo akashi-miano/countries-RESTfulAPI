@@ -20,6 +20,7 @@ a {
 
 body {
 	line-height: 1.6;
+    overflow-x: hidden;
 }
 
 
@@ -53,4 +54,10 @@ body {
 }
 .flow-content--xl > * + *  {
 	margin-top: 3.5rem !important;
+}
+
+@media screen and (max-width: 34.375em) {
+    html {
+        font-size: 65%;
+    }
 }

@@ -1,7 +1,15 @@
+import { Link } from "react-router-dom";
 const Card = ({ name, population, region, capital, flags }) => {
   return (
-    <div
-      className="card bg-white  rounded-xl shadow-xl flow-content--m hover:scale-105 duration-300 hover:cursor-pointer hover:rotate-2 dark:bg-darkBlue dark:text-white text-veryDarkBlueLightMode"
+    <Link
+      to={`/country/${name.common}`}
+      className={
+        name.common.toLowerCase() === "israel"
+          ? "hidden"
+          : "card bg-white  rounded-xl shadow-xl flow-content--m hover:scale-105 duration-300 hover:cursor-pointer hover:rotate-2 dark:bg-darkBlue dark:text-white text-veryDarkBlueLightMode"
+      }
+      data-aos="zoom-in"
+      data-aos-delay="200"
       key={name.common}
     >
       <img
@@ -26,7 +34,7 @@ const Card = ({ name, population, region, capital, flags }) => {
           {`: ${capital}`}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

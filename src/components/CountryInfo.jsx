@@ -138,9 +138,10 @@ const CountriesInfo = () => {
                   data-aos-delay="1200"
                 >
                   <div className="wrapper flex items-center gap-4 flex-wrap">
-                    {selectedCountry !== null && (
-                      <span className="font-bold">Border Countries: </span>
-                    )}
+                    {selectedCountry.borders &&
+                      selectedCountry.borders.length !== 0 && (
+                        <span className="font-bold">Border Countries: </span>
+                      )}
                     {selectedCountry.borders
                       ? selectedCountry.borders.map((item, index, arr) => (
                           <span

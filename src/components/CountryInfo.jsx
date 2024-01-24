@@ -26,10 +26,6 @@ const CountriesInfo = () => {
     setSelectedCountry(foundCountry);
   }, [country, response]);
 
-  {
-    console.log(response);
-  }
-
   if (response.length === 0 || selectedCountry === null) return "Loading...";
   return (
     <>
@@ -94,13 +90,12 @@ const CountriesInfo = () => {
                     </span>
                     {Object.values(selectedCountry.currencies).map(
                       (currency, index, array) => (
-                        <>
+                        <span key={index}>
                           {`${currency.name}`}
                           {index !== array.length - 1 && ", "}
-                        </>
+                        </span>
                       )
                     )}
-                    {console.log(response[0].currencies)}
                   </p>
                   <p className="flex items-center gap-4">
                     <span className="capitalize font-semibold flex items-center gap-2">
@@ -132,12 +127,12 @@ const CountriesInfo = () => {
                     {selectedCountry.capital}
                   </p>
                 </div>
-                <p
+                <div
                   className="flex md:items-center gap-6 mt-12  flex-col md:flex-row"
                   data-aos="fade-up"
                   data-aos-delay="1200"
                 >
-                  <div className="wrapper flex items-center gap-4 flex-wrap">
+                  <p className="wrapper flex items-center gap-4 flex-wrap">
                     {selectedCountry.borders &&
                       selectedCountry.borders.length !== 0 && (
                         <span className="font-bold">Border Countries: </span>
@@ -152,8 +147,8 @@ const CountriesInfo = () => {
                           </span>
                         ))
                       : null}
-                  </div>
-                </p>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

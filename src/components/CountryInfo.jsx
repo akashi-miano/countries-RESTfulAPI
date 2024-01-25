@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Loading from "./Loading";
 const CountriesInfo = () => {
   const [response, setResponse] = useState([]);
   const { country } = useParams();
@@ -26,7 +27,7 @@ const CountriesInfo = () => {
     setSelectedCountry(foundCountry);
   }, [country, response]);
 
-  if (response.length === 0 || selectedCountry === null) return "Loading...";
+  if (response.length === 0 || selectedCountry === null) return <Loading />;
   return (
     <>
       {selectedCountry ? (
@@ -154,7 +155,7 @@ const CountriesInfo = () => {
           </div>
         </section>
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </>
   );

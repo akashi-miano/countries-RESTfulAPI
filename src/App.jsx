@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Filter from "./components/Filter";
 import Countries from "./components/Countries";
+import Loading from "./components/Loading";
 import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -8,13 +9,16 @@ function App() {
   const [response, setResponse] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const data = await fetch("https://restcountries.com/v3.1/all");
         const res = await data.json();
         setResponse(res);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -52,7 +56,9 @@ function App() {
   const filteredByRegion = filterByRegion(response);
 
   const filteredCountries = filterBySearch(filterByRegion(response));
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Filter
         handleChange={handleSearch}
